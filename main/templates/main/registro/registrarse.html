@@ -16,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Martina Azulay</a>
+                <a class="navbar-brand" href="">Martina Azulay</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,28 +32,31 @@
     </header>
     <main class="container">
         <h1>Ingrese sus datos.</h1>
-        <div class="mb-3">
-            <label for="inputNombre">Nombre</label>
-            <input type="text" name="" id="inputNombre">
-        </div>
-        <div class="mb-3">
-            <label for="inputApellido">Apellido</label>
-            <input type="text" name="" id="inputApellido">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email">
-            <div id="emailHelp" class="form-text">No le enviaremos ningun tipo de spam.
+        <form action="/registrarse/nuevo" method="post">
+            <div class="mb-3">
+                <label for="inputNombre">Nombre</label>
+                <input type="text" name="inputNombre" id="inputNombre">
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="inputDireccion">Dirección</label>
-            <input type="text" name="" id="inputDireccion">
-        </div>
-        <div class="mb-3">
-            <label for="inputTelefono">Telefono</label>
-            <input type="number" name="" id="inputTelefono">
-        </div>
+            <div class="mb-3">
+                <label for="inputApellido">Apellido</label>
+                <input type="text" name="inputApellido" id="inputApellido">
+            </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" name="inputEmail" id="inputEmail">
+                <div id="emailHelp" class="form-text">No le enviaremos ningun tipo de spam.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="inputDireccion">Dirección</label>
+                <input type="text" name="inputDireccion" id="inputDireccion">
+            </div>
+            <div class="mb-3">
+                <label for="inputTelefono">Telefono</label>
+                <input type="number" name="inputTelefono" id="inputTelefono">
+            </div>
+            <input type="submit" value="Grabar">
+        </form>
     </main>
 </body>
 

@@ -4,8 +4,9 @@ from django.db import models
 
 
 class Producto(models.Model):
-    descripcion = models.CharField(max_length=60)
+    descripcion = models.CharField(max_length=160)
     precio = models.FloatField()
+    nombre = models.CharField(max_length=30, default='')
 
 
 class Cliente(models.Model):

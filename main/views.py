@@ -21,27 +21,34 @@ class IndexView(TemplateView):
 
 
 class RegistrarseView(TemplateView):
-    template_name = 'registrarse.html'
+    template_name = 'main/registro/registrarse.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         return context
 
+    def post(self, *args, **kwargs):
 
-class verProducto(TemplateView):
-    template_name = 'cargar_pedido.html'
+        nuevo_cliente = Cliente()
 
-    def get(self, *args, **kwargs):
-        instance = get_object_or_404(Producto, pk=self.kwargs['pk'])
+        nuevo_cliente.nombre = self.request.POST.get('inputNombre', None)
+        nuevo_cliente.apellido = self.request.POST.get('inputApellido', None)
+        nuevo_cliente.email = self.request.POST.get('inputEmail', None)
+        nuevo_cliente.direccion = self.request.POST.get('inputDireccion', None)
+        nuevo_cliente.telefono = self.request.POST.get('inputTelefono', None)
 
-        context = {'producto': instance}
+        context = {
+            'resultado': True
+        }
+
+        nuevo_cliente.save()
 
         return render(self.request, self.template_name, context)
 
 
 class cargarPedido(TemplateView):
-    template_name = 'producto.html'
+    template_name = 'main/pedidos/producto.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
