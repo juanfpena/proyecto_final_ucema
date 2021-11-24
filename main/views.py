@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, UpdateView
+from django.views.generic import View, TemplateView
 from .models import Cliente, Producto, Pedido
 from django.views import View
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -20,15 +20,21 @@ class IndexView(TemplateView):
         return context
 
 
-class RegistrarseView(TemplateView):
+class RegistrarseView(View):
     template_name = 'main/registro/registrarse.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get(self, *args, **kwargs):
 
-        return context
+        context = {
+
+        }
+
+        return render(self.request, self.template_name, context)
 
     def post(self, *args, **kwargs):
+        """
+        Permite al usuario crear un registro de cliente.
+        """
 
         nuevo_cliente = Cliente()
 
@@ -38,23 +44,55 @@ class RegistrarseView(TemplateView):
         nuevo_cliente.direccion = self.request.POST.get('inputDireccion', None)
         nuevo_cliente.telefono = self.request.POST.get('inputTelefono', None)
 
+        nuevo_cliente.save()
+
         context = {
             'resultado': True
         }
 
-        nuevo_cliente.save()
-
         return render(self.request, self.template_name, context)
 
 
-class cargarPedido(TemplateView):
+class registroCompletado(TemplateView):
+    template_name = 'main/registro/registracion_concretada.html'
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
+
+class cargarPedido(View):
     template_name = 'main/pedidos/producto.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         productos = Producto.objects.all()
+        clientes = Cliente.objects.all()
 
         context['productos'] = productos
+        context['clientes'] = clientes
 
         return context
+
+    def get(self, *args, **kwargs):
+
+        instance = ''
+
+        context = {
+
+        }
+
+        return render(self.request, self.template_name, context)
+
+    def post(self, *args, **kwargs):
+        """
+        Permite al usuario crear un registro de cliente.
+        """
+
+        nuevo_pedido = Pedido()
+
+        context = {
+
+        }
+
+        return render(self.request, self.template_name, context)
