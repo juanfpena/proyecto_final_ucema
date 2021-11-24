@@ -1,8 +1,10 @@
+from typing import ContextManager
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
 from .models import Cliente, Producto, Pedido
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
+import datetime as dt
 
 # Create your views here.
 
@@ -57,39 +59,50 @@ class registroCompletado(TemplateView):
     template_name = 'main/registro/registracion_concretada.html'
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
-
-
-class cargarPedido(View):
-    template_name = 'main/pedidos/producto.html'
-
-    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        productos = Producto.objects.all()
-        clientes = Cliente.objects.all()
-
-        context['productos'] = productos
-        context['clientes'] = clientes
 
         return context
 
+
+class verProductos(View):
+    template_name = 'main/pedidos/producto.html'
+
     def get(self, *args, **kwargs):
 
-        instance = ''
+        instance = get_list_or_404(Producto)
 
         context = {
+            'productos': instance
+        }
 
+        return render(self.request, self.template_name, context)
+
+
+class realizarPedido(View):
+    template_name = 'main/pedidos/realizar_pedido.html'
+
+    def get(self, *args, **kwargs):
+
+        clientes = get_list_or_404(Cliente)
+        productos = get_list_or_404(Producto)
+
+        context = {
+            'clientes': clientes,
+            'productos': productos
         }
 
         return render(self.request, self.template_name, context)
 
     def post(self, *args, **kwargs):
-        """
-        Permite al usuario crear un registro de cliente.
-        """
 
         nuevo_pedido = Pedido()
+
+        nuevo_pedido.cliente = self.request.POST.get('inputCliente', None)
+        nuevo_pedido.fecha_y_hora = dt.datetime.now()
+
+        nuevo_pedido.lista_productos = []
+
+        nuevo_pedido.save()
 
         context = {
 

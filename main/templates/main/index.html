@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang='en'>
 <html>
@@ -22,10 +24,14 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="cargar_pedido">Realizar un pedido</a>
+                            <a class="nav-link active" aria-current="page" href="registrarse">Registrarse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="registrarse">Registrarse</a>
+                            <a class="nav-link active" aria-current="page" href="listado_productos">Ver productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="realizar_pedido">Realizar pedido</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -42,7 +48,6 @@
             <div class="product-device shadow-sm d-none d-md-block"></div>
             <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
         </div>
-        {% load static %}
         <img src="{% static 'macarons.jpg' %}" alt="macarons">
     </main>
 </body>
