@@ -1,4 +1,4 @@
-from typing import ContextManager
+from typing import Any, ContextManager
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
 from .models import Cliente, Producto, Pedido
@@ -12,7 +12,7 @@ import datetime as dt
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
         clientes = Cliente.objects.all()
@@ -68,6 +68,9 @@ class verProductos(View):
     template_name = 'main/pedidos/producto.html'
 
     def get(self, *args, **kwargs):
+        """
+        Obtiene los objetos "Producto" con el fin de ser representados en la plantilla.
+        """
 
         instance = get_list_or_404(Producto)
 
@@ -81,7 +84,10 @@ class verProductos(View):
 class realizarPedido(View):
     template_name = 'main/pedidos/realizar_pedido.html'
 
-    def get(self, *args, **kwargs):
+    def get(self, *args, **kwargs: Any):
+        """
+        Obtiene los modelos de clientes y productos.
+        """
 
         clientes = get_list_or_404(Cliente)
         productos = get_list_or_404(Producto)
@@ -93,19 +99,36 @@ class realizarPedido(View):
 
         return render(self.request, self.template_name, context)
 
-    def post(self, *args, **kwargs):
+    def post(self, *args, **kwargs: Any):
+        """
+        Genera un nuevo listado de productos para un cliente particular.
+        """
 
         nuevo_pedido = Pedido()
 
-        nuevo_pedido.cliente = self.request.POST.get('seleccionCliente', None)
+        client_id = self.request.POST.get('seleccionCliente', None)
+        cliente_instance = Cliente.objects.get(id=client_id)
+        nuevo_pedido.cliente.add(cliente_instance)
+
         nuevo_pedido.fecha_y_hora = dt.datetime.now()
 
-        nuevo_pedido.lista_productos = []
+        productos = get_list_or_404(Producto)
+
+        for producto in productos:
+            quantity = max(self.request.POST.get('Q_' + str(producto.id)), 0)
+            producto_instance = Producto.objects.get(id=producto.id)
+
+            if quantity > 0:
+
+                for i in range(quantity):
+                    nuevo_pedido.lista_productos.add(producto_instance)
+
+            continue
 
         nuevo_pedido.save()
 
         context = {
-
+            "grabacion": True
         }
 
         return render(self.request, self.template_name, context)

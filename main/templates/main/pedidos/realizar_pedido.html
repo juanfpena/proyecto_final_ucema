@@ -29,7 +29,8 @@
             <h1>This is a test.</h1>
             <label for="exampleDataList" class="form-label">Cliente
             </label>
-            <form action="" method="post">
+            <form action="/" method="post">
+                {% csrf_token %}
                 <select class="form-select" aria-label="Default select example" name="seleccionCliente">
                     <option selected>Seleccione un cliente.</option>
                     {% for cliente in clientes %}
