@@ -7,7 +7,8 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=160)
     precio = models.FloatField()
     nombre = models.CharField(max_length=30, default='')
-    imagen = models.ImageField(upload_to='product_images', default=None)
+    imagen = models.ImageField(
+        upload_to='main/static/imagenes_productos/', default=None)
 
 
 class Cliente(models.Model):

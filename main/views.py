@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import View, TemplateView
 from .models import Cliente, Producto, Pedido
 from django.views import View
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_list_or_404
 import datetime as dt
 
 # Create your views here.
@@ -97,7 +97,7 @@ class realizarPedido(View):
 
         nuevo_pedido = Pedido()
 
-        nuevo_pedido.cliente = self.request.POST.get('inputCliente', None)
+        nuevo_pedido.cliente = self.request.POST.get('seleccionCliente', None)
         nuevo_pedido.fecha_y_hora = dt.datetime.now()
 
         nuevo_pedido.lista_productos = []

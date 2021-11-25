@@ -30,12 +30,25 @@
             <label for="exampleDataList" class="form-label">Cliente
             </label>
             <form action="" method="post">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" name="seleccionCliente">
                     <option selected>Seleccione un cliente.</option>
                     {% for cliente in clientes %}
-                    <option value='inputCliente'>{{cliente.nombre}}</option>
+                    <option value='{{cliente.id}}'>{{cliente.nombre}}</option>
                     {% endfor %}
                 </select>
+                <br>
+                <div class="input-group mb-3">
+                    {% for producto in productos %}
+                    <div class="container">
+                        <input type="number" class="form-control" placeholder="{{producto.descripcion}}"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <span class="input-group-text" id="basic-addon2">Introduzca cantidad de {{producto.nombre}},
+                            precio
+                            unitario ${{producto.precio}}</span>
+                        <br>
+                    </div>
+                    {%endfor%}
+                </div>
             </form>
         </div>
     </main>
